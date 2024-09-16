@@ -174,7 +174,7 @@ export default function Navbar() {
   
                         <PopoverPanel
                           transition
-                          className="absolute inset-x-0 top-full text-sm text-gray-500 transition data-[closed]:opacity-0 data-[enter]:duration-200 data-[leave]:duration-150 data-[enter]:ease-out data-[leave]:ease-in"
+                          className="absolute inset-x-0 top-full text-sm text-gray-500 transition data-[closed]:opacity-0 data-[enter]:duration-200 data-[leave]:duration-150 data-[enter]:ease-out data-[leave]:ease-in z-10"
                         >
                           <div className="relative bg-white">
                             <div className="mx-auto max-w-7xl px-8">
