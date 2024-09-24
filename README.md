@@ -10,6 +10,8 @@ Pour l'application web :
 
 ## Lancement
 
+Pour afficher les données des sports sur la page d'accueil, lancer d'abord le serveur du backend : [http://localhost:8000](http://localhost:8000)
+
 Lancer le serveur de développement : `npm run dev`, puis ouvrir le serveur à l’adresse : [http://localhost:3000](http://localhost:3000)
 
-Pour aller plus loin, consulter la [documentation technique]() du projet.
+Pour aller plus loin, consulter la [documentation technique](https://lively-quality-3f6.notion.site/Bloc-3-Studi-Examen-10b0cf88bc12807482ebf115edf7458e) du projet.
