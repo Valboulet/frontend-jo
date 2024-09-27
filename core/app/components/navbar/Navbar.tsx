@@ -1,63 +1,14 @@
 'use client'
 
-import { Fragment, useState } from 'react'
+import { useState } from 'react'
 import {
   Dialog,
   DialogBackdrop,
   DialogPanel,
-  Popover,
-  PopoverButton,
-  PopoverGroup,
-  PopoverPanel,
-  Tab,
-  TabGroup,
-  TabList,
-  TabPanel,
-  TabPanels,
 } from '@headlessui/react'
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
 import Logo from './Logo'
 
-const navigation = {
-  categories: [
-    {
-      id: 'sport',
-      name: 'Sports',
-      sections: [
-        {
-          items: [
-            { name: 'Tops', href: '#' },
-            { name: 'Dresses', href: '#' },
-            { name: 'Pants', href: '#' },
-            { name: 'Denim', href: '#' },
-            { name: 'Sweaters', href: '#' },
-            { name: 'T-Shirts', href: '#' },
-            { name: 'Jackets', href: '#' },
-            { name: 'Activewear', href: '#' },
-            { name: 'Browse All', href: '#' },
-          ],
-        },
-      ],
-    },
-    {
-      id: 'location',
-      name: 'Lieux',
-      sections: [
-        {
-          items: [
-            { name: 'Tops', href: '#' },
-            { name: 'Pants', href: '#' },
-            { name: 'Sweaters', href: '#' },
-            { name: 'T-Shirts', href: '#' },
-            { name: 'Jackets', href: '#' },
-            { name: 'Activewear', href: '#' },
-            { name: 'Browse All', href: '#' },
-          ],
-        },
-      ],
-    },
-  ],
-}
 
 export default function Navbar() {
     const [open, setOpen] = useState(false)
@@ -88,57 +39,28 @@ export default function Navbar() {
                 </button>
               </div>
   
-              {/* Links */}
-              <TabGroup className="mt-2">
-                <div className="border-b border-gray-200">
-                  <TabList className="-mb-px flex space-x-8 px-4">
-                    {navigation.categories.map((category) => (
-                      <Tab
-                        key={category.name}
-                        className="flex-1 whitespace-nowrap border-b-2 border-transparent px-1 py-4 text-base font-medium text-gray-900 data-[selected]:border-indigo-600 data-[selected]:text-indigo-600"
-                      >
-                        {category.name}
-                      </Tab>
-                    ))}
-                  </TabList>
+              <div className="space-y-6 border-t border-gray-200 px-4 py-6">
+                <div className="flow-root">
+                  <a href="#" className="-m-2 block p-2 font-medium text-gray-900">
+                    Les Sports
+                  </a>
                 </div>
-                <TabPanels as={Fragment}>
-                  {navigation.categories.map((category) => (
-                    <TabPanel key={category.name} className="space-y-10 px-4 pb-8 pt-10">
-                      {category.sections.map((section) => (
-                        <div>
-                          <ul
-                            role="list"
-                            aria-labelledby={`${category.id}-heading-mobile`}
-                            className="mt-6 flex flex-col space-y-6"
-                          >
-                            {section.items.map((item) => (
-                              <li key={item.name} className="flow-root">
-                                <a href={item.href} className="-m-2 block p-2 text-gray-500">
-                                  {item.name}
-                                </a>
-                              </li>
-                            ))}
-                          </ul>
-                        </div>
-                      ))}
-                    </TabPanel>
-                  ))}
-                </TabPanels>
-              </TabGroup>
-
-            <div className="space-y-6 border-t border-gray-200 px-4 py-6">
-              <div className="flow-root">
-                <a href="#" className="-m-2 block p-2 font-medium text-gray-900">
-                  Se connecter
-                </a>
+                <div className="flow-root">
+                  <a href="#" className="-m-2 block p-2 font-medium text-gray-900">
+                    Les Lieux
+                  </a>
+                </div>
+                <div className="flow-root">
+                  <a href="#" className="-m-2 block p-2 font-medium text-gray-900">
+                    Se connecter
+                  </a>
+                </div>
+                <div className="flow-root">
+                  <a href="#" className="-m-2 block p-2 font-medium text-gray-900">
+                    Créer un compte
+                  </a>
+                </div>
               </div>
-              <div className="flow-root">
-                <a href="#" className="-m-2 block p-2 font-medium text-gray-900">
-                  Créer un compte
-                </a>
-              </div>
-            </div>
 
             </DialogPanel>
           </div>
@@ -161,53 +83,24 @@ export default function Navbar() {
                 {/* Logo */}
                   <Logo />
                   
-                {/* Flyout menus */}
-                <PopoverGroup className="hidden lg:ml-8 lg:block lg:self-stretch">
+                <div className="hidden lg:ml-8 lg:block lg:self-stretch">
                   <div className="flex h-full space-x-8">
-                    {navigation.categories.map((category) => (
-                      <Popover key={category.name} className="flex">
-                        <div className="relative flex">
-                          <PopoverButton className="relative z-10 -mb-px flex items-center border-b-2 border-transparent pt-px text-sm font-medium text-gray-700 transition-colors duration-200 ease-out hover:text-gray-800 data-[open]:border-indigo-600 data-[open]:text-indigo-600">
-                            {category.name}
-                          </PopoverButton>
-                        </div>
-  
-                        <PopoverPanel
-                          transition
-                          className="absolute inset-x-0 top-full text-sm text-gray-500 transition data-[closed]:opacity-0 data-[enter]:duration-200 data-[leave]:duration-150 data-[enter]:ease-out data-[leave]:ease-in z-10"
-                        >
-                          <div className="relative bg-white">
-                            <div className="mx-auto max-w-7xl px-8">
-                              <div className="grid grid-cols-2 gap-x-8 gap-y-10 py-16">
-                                <div className="col-start-2 grid grid-cols-2 gap-x-8">
-                                 
-                                </div>
-                                <div className="row-start-1 grid grid-cols-3 gap-x-8 gap-y-10 text-sm">
-                                  {category.sections.map((section) => (
-                                    <div>
-                                      <ul
-                                        role="list"
-                                        className="mt-6 space-y-6 sm:mt-4 sm:space-y-4"
-                                      >
-                                        {section.items.map((item) => (
-                                          <li key={item.name} className="flex">
-                                            <a href={item.href} className="hover:text-gray-800">
-                                              {item.name}
-                                            </a>
-                                          </li>
-                                        ))}
-                                      </ul>
-                                    </div>
-                                  ))}
-                                </div>
-                              </div>
-                            </div>
+                      <div className="flex">
+                        <a href='#@app/page/sport-section' className="relative flex">
+                          <div className="relative z-10 -mb-px flex items-center border-b-2 border-transparent pt-px text-sm font-medium text-gray-700 transition-colors duration-200 ease-out hover:text-gray-800 data-[open]:border-indigo-600 data-[open]:text-indigo-600">
+                            Les Sports
                           </div>
-                        </PopoverPanel>
-                      </Popover>
-                    ))}
+                        </a>
+                      </div>
+                      <div className="flex">
+                        <a href='#' className="relative flex">
+                          <div className="relative z-10 -mb-px flex items-center border-b-2 border-transparent pt-px text-sm font-medium text-gray-700 transition-colors duration-200 ease-out hover:text-gray-800 data-[open]:border-indigo-600 data-[open]:text-indigo-600">
+                            Les Lieux
+                          </div>
+                        </a>
+                      </div>
                   </div>
-                </PopoverGroup>
+                </div>
   
                 <div className="ml-auto flex items-center">
                   <div className="hidden lg:flex lg:flex-1 lg:items-center lg:justify-end lg:space-x-6">
@@ -220,7 +113,6 @@ export default function Navbar() {
                     </a>
                   </div>
                 </div>
-                
               </div>
             </div>
           </nav>

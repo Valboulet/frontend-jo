@@ -1,17 +1,26 @@
-import Image from "next/image";
+'use client';
+
 import Hero from './components/hero/Hero'
-import SportsHome from './components/sports-section/SportsHome'
+import SportList from './components/sports-section/SportList'
+import LocationList from './components/locations-section/LocationList'
+
 
 export default function Home() {
+
   return (
     <div>
-      <main>
+      <header>
         <Hero />
-      </main>
+      </header>
 
-      <div>
-        <SportsHome />
-      </div>
+      <main id='sport-section'>
+        <div>
+          <SportList />
+        </div>
+        <div>
+          <LocationList />
+        </div>
+      </main>
       {/* <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
         <a
           className="flex items-center gap-2 hover:underline hover:underline-offset-4"
