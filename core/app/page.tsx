@@ -14,7 +14,7 @@ export default function Home() {
         <Hero />
       </header>
 
-      <main id='sport-section'>
+      <main>
         <div>
           <SportList />
         </div>

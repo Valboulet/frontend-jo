@@ -14,7 +14,7 @@ export default function Navbar() {
     const [open, setOpen] = useState(false)
   
     return (
-      <div className="bg-white">
+      <div className="bg-white sticky top-0">
         {/* Mobile menu */}
         <Dialog open={open} onClose={setOpen} className="relative z-40 lg:hidden">
           <DialogBackdrop
@@ -41,12 +41,12 @@ export default function Navbar() {
   
               <div className="space-y-6 border-t border-gray-200 px-4 py-6">
                 <div className="flow-root">
-                  <a href="#" className="-m-2 block p-2 font-medium text-gray-900">
+                  <a href="#sport-section" className="-m-2 block p-2 font-medium text-gray-900">
                     Les Sports
                   </a>
                 </div>
                 <div className="flow-root">
-                  <a href="#" className="-m-2 block p-2 font-medium text-gray-900">
+                  <a href="#location-section" className="-m-2 block p-2 font-medium text-gray-900">
                     Les Lieux
                   </a>
                 </div>
@@ -86,14 +86,14 @@ export default function Navbar() {
                 <div className="hidden lg:ml-8 lg:block lg:self-stretch">
                   <div className="flex h-full space-x-8">
                       <div className="flex">
-                        <a href='#@app/page/sport-section' className="relative flex">
+                        <a href='#sport-section' className="relative flex">
                           <div className="relative z-10 -mb-px flex items-center border-b-2 border-transparent pt-px text-sm font-medium text-gray-700 transition-colors duration-200 ease-out hover:text-gray-800 data-[open]:border-indigo-600 data-[open]:text-indigo-600">
                             Les Sports
                           </div>
                         </a>
                       </div>
                       <div className="flex">
-                        <a href='#' className="relative flex">
+                        <a href='#location-section' className="relative flex">
                           <div className="relative z-10 -mb-px flex items-center border-b-2 border-transparent pt-px text-sm font-medium text-gray-700 transition-colors duration-200 ease-out hover:text-gray-800 data-[open]:border-indigo-600 data-[open]:text-indigo-600">
                             Les Lieux
                           </div>
