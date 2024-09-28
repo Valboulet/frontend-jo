@@ -25,7 +25,7 @@ export function Footer() {
             </li>
             <li>
               <a
-                href="#"
+                href="/legal"
                 className="font-normal text-gray-800 hover:text-blue-500 focus:text-blue-500"
               >
                 Mentions Légales
