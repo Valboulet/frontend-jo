@@ -1,7 +1,7 @@
 const Logo = () => {
   return (
     <div className="ml-4 flex lg:ml-0">  
-      <a href="#">
+      <a href="/">
         <span className="sr-only">Jo Paris 2024</span>
         <img
             alt=""

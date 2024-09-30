@@ -33,7 +33,7 @@ export function Footer() {
             </li>
             <li>
               <a
-                href="#"
+                href="/RGPD"
                 className="font-normal text-gray-800 hover:text-blue-500 focus:text-blue-500"
               >
                 Confidentialité
