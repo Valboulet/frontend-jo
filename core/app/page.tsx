@@ -3,7 +3,6 @@
 import Hero from './components/hero/Hero'
 import SportList from './components/sports-section/SportList'
 import LocationList from './components/locations-section/LocationList'
-import { Footer } from './components/footer/Footer'
 
 
 export default function Home() {
@@ -22,10 +21,6 @@ export default function Home() {
           <LocationList />
         </div>
       </main>
-
-      <footer className="w-full bg-white p-8">
-        <Footer />
-      </footer>
     </div>
   );
 }
