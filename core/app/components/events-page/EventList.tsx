@@ -9,8 +9,8 @@ export type EventType =  {
   sport: string;
   location: string;
   date_start: string;
-  date_end: string;
-  description: string;
+  date_end: '';
+  event_description: string[];
   price: string;
 }
 
@@ -19,7 +19,6 @@ const EventList = () => {
 
   const getEvents = async () => {
     const tmpEvents = await apiService.get('/api/events/')
-
     setEvents(tmpEvents.data);
   };
 
@@ -28,7 +27,7 @@ const EventList = () => {
   }, []);
 
   return (
-    <div className="bg-white py-24 sm:py-32">   
+  <div className="bg-white py-24 sm:py-32">   
     <div className="mx-auto max-w-7xl px-6 lg:px-8">
       <div className="mx-auto max-w-2xl sm:text-center">
         <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">Simple no-tricks pricing</h2>
@@ -37,6 +36,14 @@ const EventList = () => {
           in. Explicabo id ut laborum.
         </p>
       </div>
+      {events.map((event) => {
+            return (
+              <EventListItem
+                key={event.id_event}
+                event={event}
+              />
+            )
+          })}
     </div>
   </div>  )
 
