@@ -1,5 +1,3 @@
-'use client'
-
 import React, { useEffect, useState } from 'react'
 import OfferListItem from "./OfferListItem"
 import apiService from "@/app/services/apiService"
@@ -7,7 +5,7 @@ import apiService from "@/app/services/apiService"
 export type OfferType =  {
   id_offer: string;
   offer_name: string;
-  number_of_seats: string;
+  number_of_seats: number;
   discount: number;
 }
 
@@ -16,7 +14,6 @@ const OfferList = () => {
 
   const getOffer = async () => {
     const tmpOffer = await apiService.get('/api/offers/')
-    console.log(tmpOffer.data);
     setOffers(tmpOffer.data);
   };
 

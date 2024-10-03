@@ -1,52 +1,53 @@
-'use client'
+import React, { useEffect, useState } from 'react';
+import EventListItem from './EventListItem';
+import apiService from '@/app/services/apiService';
+import { SportType } from '../events-page/filters/SportFilter';
 
-import React, { useEffect, useState } from 'react'
-import EventListItem from "./EventListItem"
-import apiService from "@/app/services/apiService"
-
-export type EventType =  {
+export type EventType = {
   id_event: string;
   sport: string;
   location: string;
   date_start: string;
-  date_end: '';
+  date_end: string;
   event_description: string[];
-  price: string;
+  price: number;
+};
+
+interface EventListProps {
+  selectedSport: SportType | null;  // Recevoir le sport sélectionné
 }
 
-const EventList = () => { 
+const EventList: React.FC<EventListProps> = ({ selectedSport }) => {
   const [events, setEvents] = useState<EventType[]>([]);
 
-  const getEvents = async () => {
-    const tmpEvents = await apiService.get('/api/events/')
-    setEvents(tmpEvents.data);
-  };
-
   useEffect(() => {
+    const getEvents = async () => {
+      const response = await apiService.get('/api/events/');
+      setEvents(response.data);
+    };
+
     getEvents();
   }, []);
 
-  return (
-  <div className="bg-white py-24 sm:py-32">   
-    <div className="mx-auto max-w-7xl px-6 lg:px-8">
-      <div className="mx-auto max-w-2xl sm:text-center">
-        <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">Simple no-tricks pricing</h2>
-        <p className="mt-6 text-lg leading-8 text-gray-600">
-          Distinctio et nulla eum soluta et neque labore quibusdam. Saepe et quasi iusto modi velit ut non voluptas
-          in. Explicabo id ut laborum.
-        </p>
-      </div>
-      {events.map((event) => {
-            return (
-              <EventListItem
-                key={event.id_event}
-                event={event}
-              />
-            )
-          })}
-    </div>
-  </div>  )
+  // Filtrer les événements en fonction du sport sélectionné
+  const filteredEvents = selectedSport
+    ? events.filter(event => event.sport === selectedSport.name)
+    : events;
 
-}
+  return (
+    <>
+      {filteredEvents.length > 0 ? (
+        filteredEvents.map(event => (
+          <EventListItem
+            key={event.id_event}
+            event={event}
+          />
+        ))
+      ) : (
+        <p className="mt-5 text-center text-gray-600">Aucun événement trouvé pour le sport sélectionné.</p>
+      )}
+    </>
+  );
+};
 
 export default EventList;

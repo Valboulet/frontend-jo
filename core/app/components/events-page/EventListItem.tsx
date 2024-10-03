@@ -17,7 +17,7 @@ const EventListItem: React.FC<EventProps> = ({
         {event.location}
       </p>
       <div className="mt-10 flex items-center gap-x-4">
-        <h4 className="flex-none text-sm font-semibold leading-6 text-indigo-600">{event.date_start} à {event.date_end}</h4>
+        <h4 className="flex-none text-sm font-semibold leading-6 text-indigo-600">Épreuves : </h4>
         <div className="h-px flex-auto bg-gray-100" />
       </div>
       <ul
@@ -33,13 +33,14 @@ const EventListItem: React.FC<EventProps> = ({
         </ul>
       </div>
     <div className="-mt-2 p-2 lg:mt-0 lg:w-full lg:max-w-md lg:flex-shrink-0">
-      <div className="rounded-2xl bg-gray-50 py-10 text-center ring-1 ring-inset ring-gray-900/5 lg:flex lg:flex-col lg:justify-center lg:py-16">
+      <div className="rounded-2xl bg-gray-50 py-5 text-center ring-1 ring-inset ring-gray-900/5 lg:flex lg:flex-col lg:justify-center lg:py-16">
         <div className="mx-auto max-w-xs px-8">
           <p className="text-base font-semibold text-gray-600">Prix total</p>
           <p className="mt-6 flex items-baseline justify-center gap-x-2">
             <span className="text-5xl font-bold tracking-tight text-gray-900">{event.price}</span>
             <span className="text-sm font-semibold leading-6 tracking-wide text-gray-600">€</span>
           </p>
+          <p className="mt-10 text-base text-gray-600">Sélectionnez une offre :</p>
 
           <OfferList />
 
