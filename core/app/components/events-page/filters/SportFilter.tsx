@@ -1,6 +1,7 @@
 import { Listbox, ListboxButton, ListboxOption, ListboxOptions } from '@headlessui/react';
 import { CheckIcon, ChevronUpDownIcon } from '@heroicons/react/20/solid';
 import React, { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 import apiService from "@/app/services/apiService";
 
 export type SportType = {
@@ -10,25 +11,37 @@ export type SportType = {
 };
 
 interface SportFilterProps {
-  onSportSelect: (sport: SportType | null) => void; // Prop pour envoyer la sélection au parent
+  onSportSelect: (sport: SportType | null) => void;
 }
 
 const SportFilter: React.FC<SportFilterProps> = ({ onSportSelect }) => {
   const [sports, setSports] = useState<SportType[]>([]);
-  const [selected, setSelected] = useState<SportType | null>(null);  // Gérer le sport sélectionné
+  const [selected, setSelected] = useState<SportType | null>(null);
+  const router = useRouter();
 
   useEffect(() => {
     const fetchSports = async () => {
-      const response = await apiService.get('/api/sports/');
-      setSports(response.data);
+      try {
+        const response = await apiService.get('/api/sports/');
+        setSports(response.data);
+      } catch (error) {
+        console.error('Erreur lors de la récupération des sports', error);
+      }
     };
-    
+
     fetchSports();
   }, []);
 
   const handleSelection = (sport: SportType | null) => {
     setSelected(sport);
-    onSportSelect(sport);  // Appeler la fonction passée en prop pour mettre à jour le parent
+    onSportSelect(sport);
+
+    // Navigation
+    if (sport) {
+      router.push(`/evenements?sport=${encodeURIComponent(sport.name)}`);
+    } else {
+      router.push(`/evenements`);
+    }
   };
 
   return (

@@ -14,7 +14,7 @@ export type EventType = {
 };
 
 interface EventListProps {
-  selectedSport: SportType | null;  // Recevoir le sport sélectionné
+  selectedSport: SportType | null; // Accept the selectedSport prop
 }
 
 const EventList: React.FC<EventListProps> = ({ selectedSport }) => {
@@ -29,7 +29,7 @@ const EventList: React.FC<EventListProps> = ({ selectedSport }) => {
     getEvents();
   }, []);
 
-  // Filtrer les événements en fonction du sport sélectionné
+  // Filter events based on selected sport
   const filteredEvents = selectedSport
     ? events.filter(event => event.sport === selectedSport.name)
     : events;
@@ -51,3 +51,5 @@ const EventList: React.FC<EventListProps> = ({ selectedSport }) => {
 };
 
 export default EventList;
+
+
