@@ -10,10 +10,13 @@ import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
 import Logo from './Logo'
 import DesktopNav from './DesktopNav'
 import Cart from '@/app/cart/page'
+import useLoginModal from '@/app/hooks/useLoginModal'
+import useSignUpModal from '@/app/hooks/useSignUpModal'
 
 export default function Navbar() {
   const [open, setOpen] = useState(false)
   const [isCartOpen, setIsCartOpen] = useState(false)
+  const loginModal = useLoginModal()
 
   // Open mobile menu
   const openMobileMenu = () => setOpen(true)
@@ -68,7 +71,12 @@ export default function Navbar() {
                 </a>
               </div>
               <div className="flow-root">
-                <a href="/login" className="-m-2 block p-2 font-medium text-gray-900">
+                <a href="" 
+                  className="-m-2 block p-2 font-medium text-gray-900"
+                  onClick={(e)=> {
+                    e.preventDefault()
+                    loginModal.open()
+                  }}>
                   Se connecter
                 </a>
               </div>

@@ -3,6 +3,8 @@ import localFont from "next/font/local";
 import "./globals.css";
 import Navbar from "./components/navbar/Navbar"
 import { Footer } from "./components/footer/Footer";
+import LoginModal from "./components/modal/LoginModal";
+import SignUpModal from "./components/modal/SignUpModal";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -25,6 +27,7 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  
   return (
     <html lang="en" className="h-full bg-white">
       <body
@@ -32,6 +35,8 @@ export default function RootLayout({
       >
         <Navbar />
         {children}
+        <LoginModal />
+        <SignUpModal />
         <Footer />
       </body>
     </html>

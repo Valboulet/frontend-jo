@@ -2,9 +2,13 @@
 
 import Cart from "@/app/cart/page"
 import { useState } from 'react'
+import useLoginModal from '@/app/hooks/useLoginModal'
+
 
 export default function DesktopNav() {
   const [isCartOpen, setIsCartOpen] = useState(false) // État pour l'ouverture du panier
+  const loginModal = useLoginModal()
+
     return (
       <>
         <div className="hidden lg:ml-8 lg:block lg:self-stretch">
@@ -28,7 +32,12 @@ export default function DesktopNav() {
 
         <div className="ml-auto flex items-center">
           <div className="hidden lg:flex lg:flex-1 lg:items-center lg:justify-end lg:space-x-6">
-            <a href="/login" className="text-sm font-medium text-gray-700 hover:text-gray-800">
+            <a href="" 
+              className="text-sm font-medium text-gray-700 hover:text-gray-800"
+              onClick={(e)=> {
+                e.preventDefault()
+                loginModal.open()
+              }}>
               Se connecter
             </a>
             <span aria-hidden="true" className="h-6 w-px bg-gray-200" />
