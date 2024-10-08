@@ -11,7 +11,7 @@ export function Footer() {
               <li>
                 <a
                   href="#"
-                  className="font-normal text-gray-800 hover:text-blue-500 focus:text-blue-500"
+                  className="font-normal text-gray-800 hover:text-cyan-700 focus:text-cyan-700"
                 >
                   À Propos
                 </a>
@@ -19,7 +19,7 @@ export function Footer() {
               <li>
                 <a
                   href="#"
-                  className="font-normal text-gray-800 hover:text-blue-500 focus:text-blue-500"
+                  className="font-normal text-gray-800 hover:text-cyan-700 focus:text-cyan-700"
                 >
                   Nous contacter
                 </a>
@@ -27,7 +27,7 @@ export function Footer() {
               <li>
                 <a
                   href="/legal"
-                  className="font-normal text-gray-800 hover:text-blue-500 focus:text-blue-500"
+                  className="font-normal text-gray-800 hover:text-cyan-700 focus:text-cyan-700"
                 >
                   Mentions Légales
                 </a>
@@ -35,7 +35,7 @@ export function Footer() {
               <li>
                 <a
                   href="/RGPD"
-                  className="font-normal text-gray-800 hover:text-blue-500 focus:text-blue-500"
+                  className="font-normal text-gray-800 hover:text-cyan-700 focus:text-cyan-700"
                 >
                   Confidentialité
                 </a>

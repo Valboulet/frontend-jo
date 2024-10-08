@@ -84,8 +84,8 @@ export default function Hero() {
                 </div>
   
                 <a
-                  href="#"
-                  className="inline-block rounded-md border border-transparent bg-red-500 px-8 py-3 text-center font-medium text-white hover:bg-indigo-700"
+                  href="/login"
+                  className="inline-block rounded-md border border-transparent bg-red-500 px-8 py-3 text-center font-medium text-white hover:bg-cyan-700"
                 >
                   Se connecter
                 </a>
