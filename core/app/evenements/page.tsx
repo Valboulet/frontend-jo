@@ -1,4 +1,4 @@
-'use client'; // Important pour utiliser le state et les hooks dans Next.js
+'use client';
 
 import React, { useState, useEffect, Suspense } from 'react'; // Importation de Suspense
 import { useSearchParams } from 'next/navigation';
