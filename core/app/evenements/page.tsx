@@ -1,6 +1,6 @@
 'use client'; // Important pour utiliser le state et les hooks dans Next.js
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Suspense } from 'react'; // Importation de Suspense
 import { useSearchParams } from 'next/navigation';
 import EventList from '../components/events-page/EventList';
 import SportFilter from '../components/events-page/filters/SportFilter';
@@ -41,8 +41,11 @@ const SelectedSport = () => {
           </div>
         </div>
 
-        {/* Passer le sport sélectionné à la liste des événements */}
-        <EventList selectedSport={selectedSport} />
+        {/* Envelopper EventList dans un Suspense pour gérer les états de chargement */}
+        <Suspense fallback={<div>Loading events...</div>}>
+          {/* Passer le sport sélectionné à la liste des événements */}
+          <EventList selectedSport={selectedSport} />
+        </Suspense>
       </div>
     </main>
   );
