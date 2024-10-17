@@ -9,9 +9,8 @@ import {
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
 import Logo from './Logo'
 import DesktopNav from './DesktopNav'
-import Cart from '@/app/cart/page'
+import Cart from '@/app/cart/Cart'
 import useLoginModal from '@/app/hooks/useLoginModal'
-import useSignUpModal from '@/app/hooks/useSignUpModal'
 
 export default function Navbar() {
   const [open, setOpen] = useState(false)

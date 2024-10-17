@@ -40,8 +40,8 @@ const products: Product[] = [
 ];
 
 type CartProps = {
-  isOpen: boolean; // Assurez-vous que ce soit un booléen
-  onClose: () => void; // Fonction pour fermer le panier
+  isOpen: boolean;
+  onClose: () => void; 
 };
 
 export default function Cart({ isOpen, onClose }: CartProps) {
