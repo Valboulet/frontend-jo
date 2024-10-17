@@ -1,6 +1,6 @@
 'use client'
 
-import Cart from "@/app/cart/page"
+import Cart from "@/app/cart/Cart"
 import { useState } from 'react'
 import useLoginModal from '@/app/hooks/useLoginModal'
 
