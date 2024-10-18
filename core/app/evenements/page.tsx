@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
-import dynamic from 'next/dynamic'; // Importation de dynamic
+import dynamic from 'next/dynamic';
 import SportFilter from '../evenements/filters/SportFilter';
 import { SportType } from '../evenements/filters/SportFilter';
 

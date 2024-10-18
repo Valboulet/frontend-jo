@@ -1,6 +1,4 @@
-'use client';
-
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, Suspense } from 'react';
 import EventListItem from './EventListItem';
 import apiService from '@/app/services/apiService';
 import { SportType } from '../evenements/filters/SportFilter';
@@ -21,16 +19,23 @@ interface EventListProps {
 
 const EventList: React.FC<EventListProps> = ({ selectedSport }) => {
   const [events, setEvents] = useState<EventType[]>([]);
-  const [error, setError] = useState<string | null>(null);
+  const [error, setError] = useState<string | null>(null); // Pour gérer les erreurs
+  const [loading, setLoading] = useState<boolean>(true); // Pour gérer l'état de chargement
 
   useEffect(() => {
     const getEvents = async () => {
       try {
         const response = await apiService.get('/api/events/');
-        setEvents(response.data || []);
+        if (response.data && response.data.length > 0) {
+          setEvents(response.data);
+        } else {
+          setError('Aucun événement trouvé.');
+        }
       } catch (error) {
         console.error('Erreur lors de la récupération des événements :', error);
         setError('Une erreur s\'est produite lors de la récupération des événements.');
+      } finally {
+        setLoading(false); // Arrête le chargement à la fin
       }
     };
 
@@ -41,8 +46,12 @@ const EventList: React.FC<EventListProps> = ({ selectedSport }) => {
     ? events.filter(event => event.sport === selectedSport.name)
     : events;
 
+  if (loading) {
+    return <p className="mt-5 text-center text-gray-600">Chargement des événements...</p>; // Afficher un état de chargement
+  }
+
   if (error) {
-    return <p className="mt-5 text-center text-red-600">{error}</p>;
+    return <p className="mt-5 text-center text-red-600">{error}</p>; // Afficher un message d'erreur
   }
 
   return (

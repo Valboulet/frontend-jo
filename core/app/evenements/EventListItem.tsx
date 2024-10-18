@@ -1,13 +1,17 @@
 import { CheckIcon } from '@heroicons/react/20/solid';
 import { EventType } from './EventList';
 import OfferList from '../evenements/offers/OfferList';
-import Link from 'next/link'; // Importer Link de Next.js
+import Link from 'next/link';
 
 interface EventProps {
   event: EventType;
 }
 
 const EventListItem: React.FC<EventProps> = ({ event }) => {
+  if (!event) {
+    return <p>Événement introuvable.</p>; // Gestion de l'état d'erreur si l'événement est introuvable
+  }
+
   return (
     <div className="mx-auto mt-16 max-w-2xl rounded-3xl ring-1 ring-gray-200 sm:mt-20 lg:mx-0 lg:flex lg:max-w-none">
       <div className="p-8 sm:p-10 lg:flex-auto">
@@ -40,7 +44,6 @@ const EventListItem: React.FC<EventProps> = ({ event }) => {
 
             <OfferList />
 
-            {/* Utilisation de Link pour la redirection */}
             <Link href={`/event/${event.id_event}`} className="mt-10 block w-full rounded-md bg-cyan-700 px-3 py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-cyan-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
               CHOISIR CE TICKET
             </Link>
