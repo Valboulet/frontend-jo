@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, Suspense } from 'react';
 import EventListItem from './EventListItem';
 import apiService from '@/app/services/apiService';
-import { SportType } from '../events-page/filters/SportFilter';
+import { SportType } from '../evenements/filters/SportFilter';
 
 export type EventType = {
   id_event: string;
@@ -14,34 +14,40 @@ export type EventType = {
 };
 
 interface EventListProps {
-  selectedSport: SportType | null; // Accept the selectedSport prop
+  selectedSport: SportType | null;
 }
 
 const EventList: React.FC<EventListProps> = ({ selectedSport }) => {
   const [events, setEvents] = useState<EventType[]>([]);
+  const [error, setError] = useState<string | null>(null); // Pour gérer les erreurs
 
   useEffect(() => {
     const getEvents = async () => {
-      const response = await apiService.get('/api/events/');
-      setEvents(response.data);
+      try {
+        const response = await apiService.get('/api/events/');
+        setEvents(response.data);
+      } catch (error) {
+        console.error('Erreur lors de la récupération des événements :', error);
+        setError('Une erreur s\'est produite lors de la récupération des événements.');
+      }
     };
 
     getEvents();
   }, []);
 
-  // Filter events based on selected sport
   const filteredEvents = selectedSport
     ? events.filter(event => event.sport === selectedSport.name)
     : events;
+
+  if (error) {
+    return <p className="mt-5 text-center text-red-600">{error}</p>;
+  }
 
   return (
     <>
       {filteredEvents.length > 0 ? (
         filteredEvents.map(event => (
-          <EventListItem
-            key={event.id_event}
-            event={event}
-          />
+          <EventListItem key={event.id_event} event={event} />
         ))
       ) : (
         <p className="mt-5 text-center text-gray-600">Aucun événement trouvé pour le sport sélectionné.</p>
@@ -51,5 +57,4 @@ const EventList: React.FC<EventListProps> = ({ selectedSport }) => {
 };
 
 export default EventList;
-
 

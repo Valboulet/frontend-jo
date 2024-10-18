@@ -1,6 +1,6 @@
 import { CheckIcon } from '@heroicons/react/20/solid';
 import { EventType } from './EventList';
-import OfferList from '../events-page/offers/OfferList';
+import OfferList from '../evenements/offers/OfferList';
 import Link from 'next/link'; // Importer Link de Next.js
 
 interface EventProps {
