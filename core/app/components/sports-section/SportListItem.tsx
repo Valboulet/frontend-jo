@@ -1,3 +1,5 @@
+'use client'
+
 import { useRouter } from 'next/navigation'; // Import du router de Next.js
 import { SportType } from './SportList';
 

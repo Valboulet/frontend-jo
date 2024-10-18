@@ -1,3 +1,5 @@
+'use client'
+
 import { Listbox, ListboxButton, ListboxOption, ListboxOptions } from '@headlessui/react';
 import { CheckIcon, ChevronUpDownIcon } from '@heroicons/react/20/solid';
 import React, { useState, useEffect } from 'react';

@@ -1,3 +1,5 @@
+'use client'
+
 import React, { useEffect, useState } from 'react'
 import SportListItem from "./SportListItem"
 import apiService from "@/app/services/apiService"
