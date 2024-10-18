@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation'; // Importation de useRouter
 import Hero from './components/hero/Hero';
 import SportList from './components/sports-section/SportList';
 import LocationList from './components/locations-section/LocationList';
-import { SportType } from './components/events-page/filters/SportFilter'; // Importation du type SportType
+import { SportType } from './evenements/filters/SportFilter'; // Importation du type SportType
 
 export default function Home() {
   const [selectedSport, setSelectedSport] = useState<SportType | null>(null); // État pour le sport sélectionné
