@@ -11,36 +11,36 @@ export type SportType = {
 };
 
 interface SportFilterProps {
-  onSportSelect: (sport: SportType | null) => void;
+  onSportSelect: (sport: SportType | null) => void; // Fonction pour gérer la sélection de sport
 }
 
 const SportFilter: React.FC<SportFilterProps> = ({ onSportSelect }) => {
-  const [sports, setSports] = useState<SportType[]>([]);
-  const [selected, setSelected] = useState<SportType | null>(null);
-  const router = useRouter();
+  const [sports, setSports] = useState<SportType[]>([]); // État pour stocker la liste des sports
+  const [selected, setSelected] = useState<SportType | null>(null); // État pour le sport sélectionné
+  const router = useRouter(); // Utilisation du routeur Next.js
 
   useEffect(() => {
     const fetchSports = async () => {
       try {
-        const response = await apiService.get('/api/sports/');
-        setSports(response.data);
+        const response = await apiService.get('/api/sports/'); // Récupération des sports
+        setSports(response.data); // Mise à jour de l'état avec les sports récupérés
       } catch (error) {
-        console.error('Erreur lors de la récupération des sports', error);
+        console.error('Erreur lors de la récupération des sports', error); // Gestion des erreurs
       }
     };
 
-    fetchSports();
+    fetchSports(); // Appel de la fonction pour récupérer les sports
   }, []);
 
   const handleSelection = (sport: SportType | null) => {
-    setSelected(sport);
-    onSportSelect(sport);
+    setSelected(sport); // Mise à jour de l'état avec le sport sélectionné
+    onSportSelect(sport); // Appel de la fonction pour gérer la sélection
 
     // Navigation
     if (sport) {
-      router.push(`/evenements?sport=${encodeURIComponent(sport.name)}`);
+      router.push(`/evenements?sport=${encodeURIComponent(sport.name)}`); // Navigation vers la page des événements avec le sport sélectionné
     } else {
-      router.push(`/evenements`);
+      router.push(`/evenements`); // Navigation vers la page des événements sans sport sélectionné
     }
   };
 
@@ -50,9 +50,9 @@ const SportFilter: React.FC<SportFilterProps> = ({ onSportSelect }) => {
         <ListboxButton className="relative w-full cursor-default rounded-md bg-white py-1.5 pl-3 pr-10 text-left text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 sm:text-sm sm:leading-6">
           <span className="flex items-center">
             {selected ? (
-              <span className="ml-3 block truncate">{selected.name}</span>
+              <span className="ml-3 block truncate">{selected.name}</span> // Affiche le nom du sport sélectionné
             ) : (
-              <span className="ml-3 block truncate">Choisissez un sport</span>
+              <span className="ml-3 block truncate">Choisissez un sport</span> // Texte par défaut si aucun sport n'est sélectionné
             )}
           </span>
           <span className="pointer-events-none absolute inset-y-0 right-0 ml-3 flex items-center pr-2">
@@ -69,13 +69,13 @@ const SportFilter: React.FC<SportFilterProps> = ({ onSportSelect }) => {
             >
               <div className="flex items-center">
                 <span className="ml-3 block truncate font-normal group-data-[selected]:font-semibold">
-                  {sport.name}
+                  {sport.name} {/* Affiche le nom du sport */}
                 </span>
               </div>
 
               {selected?.id_sport === sport.id_sport && (
                 <span className="absolute inset-y-0 right-0 flex items-center pr-4 text-indigo-600 group-data-[focus]:text-white">
-                  <CheckIcon aria-hidden="true" className="h-5 w-5" />
+                  <CheckIcon aria-hidden="true" className="h-5 w-5" /> {/* Icône de sélection si le sport est choisi */}
                 </span>
               )}
             </ListboxOption>

@@ -22,9 +22,9 @@ const SelectedSport = () => {
     if (sportNameFromUrl) {
       // Si un sport est passé dans l'URL, on crée un objet de type SportType avec juste le nom
       setSelectedSport({
-        id_sport: '', // On peut laisser vide ou null si on ne l'a pas encore
+        id_sport: '', // Laisser vide ou null si non connu
         name: sportNameFromUrl,
-        pictogram_url: '' // On peut laisser vide également, ou choisir un placeholder
+        pictogram_url: '' // Placeholder ou vide
       });
     }
   }, [searchParams]); // Exécuté à chaque changement des paramètres d'URL
