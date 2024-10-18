@@ -2,9 +2,9 @@
 
 import React, { useState, useEffect, Suspense } from 'react'; // Importation de Suspense
 import { useSearchParams } from 'next/navigation';
-import EventList from '../components/events-page/EventList';
-import SportFilter from '../components/events-page/filters/SportFilter';
-import { SportType } from '../components/events-page/filters/SportFilter';
+import EventList from '../evenements/EventList';
+import SportFilter from '../evenements/filters/SportFilter';
+import { SportType } from '../evenements/filters/SportFilter';
 
 const SelectedSport = () => {
   const [selectedSport, setSelectedSport] = useState<SportType | null>(null);

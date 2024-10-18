@@ -1,7 +1,7 @@
 import React, { useEffect, useState, Suspense } from 'react';
 import EventListItem from './EventListItem';
 import apiService from '@/app/services/apiService';
-import { SportType } from '../events-page/filters/SportFilter';
+import { SportType } from '../evenements/filters/SportFilter';
 
 export type EventType = {
   id_event: string;
