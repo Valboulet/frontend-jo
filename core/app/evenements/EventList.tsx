@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 import React, { useEffect, useState } from 'react';
 import EventListItem from './EventListItem';
@@ -21,13 +21,13 @@ interface EventListProps {
 
 const EventList: React.FC<EventListProps> = ({ selectedSport }) => {
   const [events, setEvents] = useState<EventType[]>([]);
-  const [error, setError] = useState<string | null>(null); // Pour gérer les erreurs
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const getEvents = async () => {
       try {
         const response = await apiService.get('/api/events/');
-        setEvents(response.data || []); // Prendre en compte les événements
+        setEvents(response.data || []);
       } catch (error) {
         console.error('Erreur lors de la récupération des événements :', error);
         setError('Une erreur s\'est produite lors de la récupération des événements.');
@@ -35,10 +35,10 @@ const EventList: React.FC<EventListProps> = ({ selectedSport }) => {
     };
 
     getEvents();
-  }, []); // On récupère tous les événements au premier rendu
+  }, []);
 
   const filteredEvents = selectedSport
-    ? events.filter(event => event.sport === selectedSport.name) // Filtrer par sport
+    ? events.filter(event => event.sport === selectedSport.name)
     : events;
 
   if (error) {

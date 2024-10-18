@@ -1,33 +1,31 @@
 'use client';
 
-import React, { useState, useEffect, Suspense } from 'react'; // Importation de Suspense
+import React, { useEffect, useState, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
-import EventList from '../evenements/EventList';
+import dynamic from 'next/dynamic'; // Importation de dynamic
 import SportFilter from '../evenements/filters/SportFilter';
 import { SportType } from '../evenements/filters/SportFilter';
 
+// Charger EventList sans SSR
+const DynamicEventList = dynamic(() => import('../evenements/EventList'), {
+  ssr: false, // Désactiver le rendu côté serveur
+});
+
 const SelectedSport = () => {
   const [selectedSport, setSelectedSport] = useState<SportType | null>(null);
-  const searchParams = useSearchParams(); // Pour récupérer les paramètres de l'URL
+  const searchParams = useSearchParams();
 
-  // Fonction pour mettre à jour le sport sélectionné
-  const handleSportSelect = (sport: SportType | null) => {
-    setSelectedSport(sport);
-  };
-
-  // Utiliser l'effet pour récupérer le paramètre 'sport' dans l'URL à la première charge de la page
   useEffect(() => {
     const sportNameFromUrl = searchParams.get('sport');
     
     if (sportNameFromUrl) {
-      // Si un sport est passé dans l'URL, on crée un objet de type SportType avec juste le nom
       setSelectedSport({
-        id_sport: '', // Laisser vide ou null si non connu
+        id_sport: '',
         name: sportNameFromUrl,
-        pictogram_url: '' // Placeholder ou vide
+        pictogram_url: ''
       });
     }
-  }, [searchParams]); // Exécuté à chaque changement des paramètres d'URL
+  }, [searchParams]);
 
   return (
     <main className="bg-white py-24 sm:py-32">
@@ -36,15 +34,13 @@ const SelectedSport = () => {
           <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">Sélectionnez vos tickets</h2>
           <p className="mt-6 text-lg leading-8 text-gray-600">Rechercher par sport</p>
           <div className="mt-5">
-            {/* Passer la fonction callback pour obtenir le sport sélectionné */}
-            <SportFilter onSportSelect={handleSportSelect} />
+            <SportFilter onSportSelect={setSelectedSport} />
           </div>
         </div>
 
-        {/* Envelopper EventList dans un Suspense pour gérer les états de chargement */}
         <Suspense fallback={<div>Loading events...</div>}>
-          {/* Passer le sport sélectionné à la liste des événements */}
-          <EventList selectedSport={selectedSport} />
+          {/* Utilisation du composant EventList sans SSR */}
+          <DynamicEventList selectedSport={selectedSport} />
         </Suspense>
       </div>
     </main>
@@ -52,3 +48,4 @@ const SelectedSport = () => {
 };
 
 export default SelectedSport;
+
