@@ -1,4 +1,4 @@
-import React, { useEffect, useState, Suspense } from 'react';
+import React, { useEffect, useState } from 'react';
 import EventListItem from './EventListItem';
 import apiService from '@/app/services/apiService';
 import { SportType } from '../evenements/filters/SportFilter';
@@ -23,9 +23,13 @@ const EventList: React.FC<EventListProps> = ({ selectedSport }) => {
   const [loading, setLoading] = useState<boolean>(true); // Pour gérer l'état de chargement
 
   useEffect(() => {
+    // Ne pas appeler l'API si aucun sport n'est sélectionné
+    if (!selectedSport) return;
+
     const getEvents = async () => {
+      setLoading(true); // Démarrer le chargement
       try {
-        const response = await apiService.get('/api/events/');
+        const response = await apiService.get(`/api/events?sport=${selectedSport.name}`);
         if (response.data && response.data.length > 0) {
           setEvents(response.data);
         } else {
@@ -40,18 +44,18 @@ const EventList: React.FC<EventListProps> = ({ selectedSport }) => {
     };
 
     getEvents();
-  }, []);
+  }, [selectedSport]);
 
   const filteredEvents = selectedSport
     ? events.filter(event => event.sport === selectedSport.name)
-    : events;
+    : [];
 
   if (loading) {
-    return <p className="mt-5 text-center text-gray-600">Chargement des événements...</p>; // Afficher un état de chargement
+    return <p className="mt-5 text-center text-gray-600">Chargement des événements...</p>;
   }
 
   if (error) {
-    return <p className="mt-5 text-center text-red-600">{error}</p>; // Afficher un message d'erreur
+    return <p className="mt-5 text-center text-red-600">{error}</p>;
   }
 
   return (
@@ -68,4 +72,5 @@ const EventList: React.FC<EventListProps> = ({ selectedSport }) => {
 };
 
 export default EventList;
+
 
