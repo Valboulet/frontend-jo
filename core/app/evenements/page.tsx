@@ -5,6 +5,8 @@ import { useRouter, useSearchParams } from 'next/navigation'; // Importation du 
 import dynamic from 'next/dynamic';
 import SportFilter from '../evenements/filters/SportFilter';
 import { SportType } from '../evenements/filters/SportFilter';
+import ErrorPage from 'next/error';
+
 
 // Charger EventList sans SSR
 const DynamicEventList = dynamic(() => import('../evenements/EventList'), {
@@ -32,6 +34,10 @@ const SelectedSport = () => {
       });
     }
   }, [searchParams, router]);
+
+  if (!selectedSport) {
+    return <ErrorPage statusCode={404} />;
+  }
 
   return (
     <main className="bg-white py-24 sm:py-32">
