@@ -1,10 +1,9 @@
 'use client'; // Utilisation du client-side rendering
 
 import React, { useEffect, useState, Suspense } from 'react';
-import { useRouter, useSearchParams } from 'next/navigation'; // Importation du router et des params
+import { useRouter, useSearchParams } from 'next/navigation';
 import dynamic from 'next/dynamic';
-import SportFilter from '../evenements/filters/SportFilter';
-import { SportType } from '../evenements/filters/SportFilter';
+import SportFilter, { SportType } from '../evenements/filters/SportFilter';
 import ErrorPage from 'next/error';
 
 // Charger EventList sans SSR
@@ -15,24 +14,32 @@ const DynamicEventList = dynamic(() => import('../evenements/EventList'), {
 const SelectedSportContent = () => {
   const [selectedSport, setSelectedSport] = useState<SportType | null>(null);
   const searchParams = useSearchParams();
-  const router = useRouter(); // Utilisation de useRouter pour les redirections
+  const router = useRouter();
 
+  // Utiliser les paramètres de recherche de l'URL pour définir le sport sélectionné au chargement
   useEffect(() => {
-    // Vérifie si un sport est présent dans les paramètres d'URL
     const sportNameFromUrl = searchParams.get('sport');
 
-    if (!sportNameFromUrl) {
-      // Si aucun sport n'est sélectionné, rediriger vers la page d'accueil
-      router.push('/'); // Redirection vers l'accueil
-    } else {
-      // Mettre à jour le sport sélectionné basé sur l'URL
+    if (sportNameFromUrl) {
       setSelectedSport({
         id_sport: '',
         name: sportNameFromUrl,
         pictogram_url: '',
       });
     }
-  }, [searchParams, router]);
+  }, [searchParams]);
+
+  // Fonction appelée lorsque l'utilisateur sélectionne un sport via le filtre
+  const handleSportSelect = (sport: SportType | null) => {
+    setSelectedSport(sport);
+
+    // Mettre à jour l'URL avec le sport sélectionné
+    if (sport) {
+      router.push(`/evenements?sport=${encodeURIComponent(sport.name)}`);
+    } else {
+      router.push(`/evenements`);
+    }
+  };
 
   if (!selectedSport) {
     return <ErrorPage statusCode={404} />;
@@ -41,10 +48,10 @@ const SelectedSportContent = () => {
   return (
     <div>
       {/* Affiche le filtre des sports */}
-      <SportFilter onSportSelect={setSelectedSport} />
+      <SportFilter onSportSelect={handleSportSelect} />
 
+      {/* Affiche la liste d'événements filtrée */}
       <Suspense fallback={<div>Loading events...</div>}>
-        {/* Utilisation du composant EventList */}
         {selectedSport && (
           <DynamicEventList selectedSport={selectedSport} />
         )}
@@ -53,7 +60,6 @@ const SelectedSportContent = () => {
   );
 };
 
-// Wrapper principal avec Suspense pour encapsuler la partie avec useSearchParams()
 const SelectedSport = () => {
   return (
     <main className="bg-white py-24 sm:py-32">
@@ -64,7 +70,7 @@ const SelectedSport = () => {
           </h2>
           <p className="mt-6 text-lg leading-8 text-gray-600">Rechercher par sport</p>
           <div className="mt-5">
-            {/* Encapsuler la logique de SelectedSportContent dans Suspense */}
+            {/* Composant contenant la logique de sélection du sport */}
             <Suspense fallback={<div>Loading sport filter...</div>}>
               <SelectedSportContent />
             </Suspense>
