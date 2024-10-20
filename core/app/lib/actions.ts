@@ -2,12 +2,14 @@
 
 import { cookies } from 'next/headers';
 
+const API_HOST = process.env.NEXT_PUBLIC_API_HOST; // Récupération de la variable d'environnement
+
 export async function handleRefresh() {
     console.log('handleRefresh');
 
     const refreshToken = await getRefreshToken();
 
-    const token = await fetch('http://localhost:8000/api/auth/token/refresh/', {
+    const token = await fetch(`${API_HOST}/api/auth/token/refresh/`, { // Utilisation de l'API_HOST ici
         method: 'POST',
         body: JSON.stringify({
             refresh: refreshToken
@@ -24,7 +26,7 @@ export async function handleRefresh() {
             if (json.access) {
                 cookies().set('session_access_token', json.access, {
                     httpOnly: true,
-                    secure: false,
+                    secure: false, // En production, tu devrais probablement le mettre sur `true`
                     maxAge: 60 * 60, // 60 minutes
                     path: '/'
                 });
@@ -36,9 +38,8 @@ export async function handleRefresh() {
         })
         .catch((error) => {
             console.log('error', error);
-
             resetAuthCookies();
-        })
+        });
 
     return token;
 }
@@ -46,22 +47,22 @@ export async function handleRefresh() {
 export async function handleLogin(userId: string, accessToken: string, refreshToken: string) {
     cookies().set('session_userid', userId, {
         httpOnly: true,
-        secure: false,
-        maxAge: 60 * 60 * 24 * 7, // One week
+        secure: false, // En production, tu devrais probablement le mettre sur `true`
+        maxAge: 60 * 60 * 24 * 7, // Une semaine
         path: '/'
     });
 
     cookies().set('session_access_token', accessToken, {
         httpOnly: true,
-        secure: false,
+        secure: false, // En production, tu devrais probablement le mettre sur `true`
         maxAge: 60 * 60, // 60 minutes
         path: '/'
     });
 
     cookies().set('session_refresh_token', refreshToken, {
         httpOnly: true,
-        secure: false,
-        maxAge: 60 * 60 * 24 * 7, // One week
+        secure: false, // En production, tu devrais probablement le mettre sur `true`
+        maxAge: 60 * 60 * 24 * 7, // Une semaine
         path: '/'
     });
 }
@@ -72,12 +73,11 @@ export async function resetAuthCookies() {
     cookies().set('session_refresh_token', '');
 }
 
-//
-// Get data
+// Récupérer les données
 
 export async function getUserId() {
-    const userId = cookies().get('session_userid')?.value
-    return userId ? userId : null
+    const userId = cookies().get('session_userid')?.value;
+    return userId ? userId : null;
 }
 
 export async function getAccessToken() {
