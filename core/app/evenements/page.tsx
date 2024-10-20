@@ -7,13 +7,12 @@ import SportFilter from '../evenements/filters/SportFilter';
 import { SportType } from '../evenements/filters/SportFilter';
 import ErrorPage from 'next/error';
 
-
 // Charger EventList sans SSR
 const DynamicEventList = dynamic(() => import('../evenements/EventList'), {
   ssr: false, // Désactiver le rendu côté serveur
 });
 
-const SelectedSport = () => {
+const SelectedSportContent = () => {
   const [selectedSport, setSelectedSport] = useState<SportType | null>(null);
   const searchParams = useSearchParams();
   const router = useRouter(); // Utilisation de useRouter pour les redirections
@@ -40,6 +39,23 @@ const SelectedSport = () => {
   }
 
   return (
+    <div>
+      {/* Affiche le filtre des sports */}
+      <SportFilter onSportSelect={setSelectedSport} />
+
+      <Suspense fallback={<div>Loading events...</div>}>
+        {/* Utilisation du composant EventList */}
+        {selectedSport && (
+          <DynamicEventList selectedSport={selectedSport} />
+        )}
+      </Suspense>
+    </div>
+  );
+};
+
+// Wrapper principal avec Suspense pour encapsuler la partie avec useSearchParams()
+const SelectedSport = () => {
+  return (
     <main className="bg-white py-24 sm:py-32">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <div className="mx-auto max-w-2xl sm:text-center">
@@ -48,22 +64,15 @@ const SelectedSport = () => {
           </h2>
           <p className="mt-6 text-lg leading-8 text-gray-600">Rechercher par sport</p>
           <div className="mt-5">
-            {/* Affiche le filtre des sports */}
-            <SportFilter onSportSelect={setSelectedSport} />
+            {/* Encapsuler la logique de SelectedSportContent dans Suspense */}
+            <Suspense fallback={<div>Loading sport filter...</div>}>
+              <SelectedSportContent />
+            </Suspense>
           </div>
         </div>
-
-        <Suspense fallback={<div>Loading events...</div>}>
-          {/* Utilisation du composant EventList */}
-          {selectedSport && (
-            <DynamicEventList selectedSport={selectedSport} />
-          )}
-        </Suspense>
       </div>
     </main>
   );
 };
 
 export default SelectedSport;
-
-
