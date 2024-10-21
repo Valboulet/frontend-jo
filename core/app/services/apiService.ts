@@ -5,7 +5,7 @@ const apiService = {
         // console.log('get', url);
 
         return new Promise((resolve, reject) => {
-            fetch(`https://backjo2024.up.railway.app${url}`, {
+            fetch(`${process.env.NEXT_PUBLIC_API_HOST}${url}`, {
                 method: 'GET',
                 headers: {
                     'Accept': 'application/json',
@@ -30,7 +30,7 @@ const apiService = {
         const token = await getAccessToken();
 
         return new Promise((resolve, reject) => {
-            fetch(`https://backjo2024.up.railway.app${url}`, {
+            fetch(`${process.env.NEXT_PUBLIC_API_HOST}${url}`, {
                 method: 'POST',
                 body: data,
                 headers: {
