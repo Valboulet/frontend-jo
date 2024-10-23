@@ -13,19 +13,16 @@ const SignUpModal = () => {
     const [firstname, setFirstname] = useState('');
     const [lastname, setLastname] = useState('');
     const [email, setEmail] = useState('');
-    const [date_of_birth, setDateOfBirth] = useState('');
-    const [country, setCountry] = useState('');
     const [password1, setPassword1] = useState('');
     const [password2, setPassword2] = useState('');
     const [errors, setErrors] = useState<string[]>([]);
 
     // Submit function
     const submitSignup = async () => {
+        console.log('Erreur')
         const formData = {
-            firstname: firstname,
-            lastname: lastname,
-            date_of_birth: date_of_birth ? new Date(date_of_birth).toISOString().split('T')[0] : null,
-            country: country,
+            first_name: firstname,
+            last_name: lastname,
             email: email,
             password1: password1,
             password2: password2,
@@ -34,7 +31,7 @@ const SignUpModal = () => {
 
         if (response.access) {
             signUpModal.close
-            router.push('/')
+            // router.push('/')
         } else {
             const tmpErrors: string[] = Object.values(response).map((error:any) => {
                 return error
@@ -45,10 +42,8 @@ const SignUpModal = () => {
 
     const content = (
         <>
-            <form onSubmit={(e) => { 
-                    e.preventDefault();
-                    submitSignup(); 
-                }} method="POST" className="space-y-6 px-10 py-3">
+            <form 
+                className="space-y-6 px-10 py-3">
                 
                 <div>
                     <label htmlFor="firstname" className="block text-sm font-medium leading-6 text-gray-900">
@@ -57,10 +52,10 @@ const SignUpModal = () => {
                     <div className="mt-2">
                         <input
                         id="firstname"
-                        name="firstname"
+                        // name="firstname"
                         type="text"
-                        required
-                        autoComplete="firstname"
+                        // required
+                        // autoComplete="firstname"
                         className="block w-full rounded-md border-0 py-1.5 px-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-cyan-700 sm:text-sm sm:leading-6"
                         onChange={(e) => setFirstname(e.target.value)}
                         />
@@ -74,46 +69,12 @@ const SignUpModal = () => {
                     <div className="mt-2">
                         <input
                         id="lastname"
-                        name="lastname"
+                        // name="lastname"
                         type="text"
-                        required
-                        autoComplete="lastname"
+                        // required
+                        // autoComplete="lastname"
                         className="block w-full rounded-md border-0 py-1.5 px-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-cyan-700 sm:text-sm sm:leading-6"
                         onChange={(e) => setLastname(e.target.value)}
-                        />
-                    </div>
-                </div>
-
-                <div>
-                    <label htmlFor="date-of-birth" className="block text-sm font-medium leading-6 text-gray-900">
-                        Date de naissance
-                    </label>
-                    <div className="mt-2">
-                        <input
-                        id="date-of-birth"
-                        name="date-of-birth"
-                        type="date"
-                        required
-                        autoComplete="date-of-birth"
-                        className="block w-full rounded-md border-0 py-1.5 px-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-cyan-700 sm:text-sm sm:leading-6"
-                        onChange={(e) => setDateOfBirth(e.target.value)}
-                        />
-                    </div>
-                </div>
-
-                <div>
-                    <label htmlFor="country" className="block text-sm font-medium leading-6 text-gray-900">
-                        Pays
-                    </label>
-                    <div className="mt-2">
-                        <input
-                        id="country"
-                        name="country"
-                        type="text"
-                        required
-                        autoComplete="country"
-                        className="block w-full rounded-md border-0 py-1.5 px-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-cyan-700 sm:text-sm sm:leading-6"
-                        onChange={(e) => setCountry(e.target.value)}
                         />
                     </div>
                 </div>
@@ -125,10 +86,10 @@ const SignUpModal = () => {
                     <div className="mt-2">
                         <input
                         id="email"
-                        name="email"
+                        // name="email"
                         type="email"
-                        required
-                        autoComplete="email"
+                        // required
+                        // autoComplete="email"
                         className="block w-full rounded-md border-0 py-1.5 px-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-cyan-700 sm:text-sm sm:leading-6"
                         onChange={(e) => setEmail(e.target.value)}
                         />
@@ -144,9 +105,9 @@ const SignUpModal = () => {
                     <div className="mt-2">
                         <input
                             id="password"
-                            name="password"
+                            // name="password"
                             type="password"
-                            required
+                            // required
                             className="block w-full rounded-md border-0 py-1.5 px-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-cyan-700 sm:text-sm sm:leading-6"
                             onChange={(e) => setPassword1(e.target.value)}
                         />
@@ -162,9 +123,9 @@ const SignUpModal = () => {
                     <div className="mt-2">
                         <input
                             id="password2"
-                            name="password2"
+                            // name="password2"
                             type="password"
-                            required
+                            // required
                             className="block w-full rounded-md border-0 py-1.5 px-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-cyan-700 sm:text-sm sm:leading-6"
                             onChange={(e) => setPassword2(e.target.value)}
                         />
