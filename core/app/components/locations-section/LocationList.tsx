@@ -1,3 +1,10 @@
+/**
+ * LocationList component that fetches and displays a list of locations.
+ * 
+ * Fetches location data from the API on mount and renders each location
+ * as a LocationListItem in a grid layout.
+ */
+
 'use client'
 
 import React, { useEffect, useState } from 'react'

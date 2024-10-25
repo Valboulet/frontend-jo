@@ -7,34 +7,27 @@ type Product = {
   id: number;
   name: string;
   href: string;
-  color: string;
-  price: string;
-  quantity: number;
-  imageSrc: string;
-  imageAlt: string;
+  location: string;
+  price: number;
+  offer: string;
 };
 
 const products: Product[] = [
   {
     id: 1,
-    name: 'Throwback Hip Bag',
+    name: 'Athlétisme | 03/08/2024',
     href: '#',
-    color: 'Salmon',
-    price: '$90.00',
-    quantity: 1,
-    imageSrc: 'https://tailwindui.com/plus/img/ecommerce-images/shopping-cart-page-04-product-01.jpg',
-    imageAlt: 'Salmon orange fabric pouch with match zipper, gray zipper pull, and adjustable hip belt.',
+    location: 'Stade de France | SAINT-DENIS',
+    price: (170 * 2) * 0.95,
+    offer: 'Duo | 2 personnes',
   },
   {
     id: 2,
-    name: 'Medium Stuff Satchel',
+    name: 'Handball | 06/08/2024',
     href: '#',
-    color: 'Blue',
-    price: '$32.00',
-    quantity: 1,
-    imageSrc: 'https://tailwindui.com/plus/img/ecommerce-images/shopping-cart-page-04-product-02.jpg',
-    imageAlt:
-      'Front of satchel with blue canvas body, black straps and handle, drawstring top, and front zipper pouch.',
+    location: 'Stade Pierre Mauroy | LILLE',
+    price: (125 * 4) * 0.85,
+    offer: 'Famille | 4 personnes',
   },
   // More products...
 ];
@@ -45,6 +38,7 @@ type CartProps = {
 };
 
 export default function Cart({ isOpen, onClose }: CartProps) {
+  const totalPrice = products.reduce((total, product) => total + product.price, 0);
   return (
     <Dialog open={isOpen} onClose={onClose} className="relative z-10">
       <DialogBackdrop
@@ -81,13 +75,6 @@ export default function Cart({ isOpen, onClose }: CartProps) {
                       <ul role="list" className="-my-6 divide-y divide-gray-200">
                         {products.map((product) => (
                           <li key={product.id} className="flex py-6">
-                            <div className="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200">
-                              <img
-                                alt={product.imageAlt}
-                                src={product.imageSrc}
-                                className="h-full w-full object-cover object-center"
-                              />
-                            </div>
 
                             <div className="ml-4 flex flex-1 flex-col">
                               <div>
@@ -95,12 +82,12 @@ export default function Cart({ isOpen, onClose }: CartProps) {
                                   <h3>
                                     <a href={product.href}>{product.name}</a>
                                   </h3>
-                                  <p className="ml-4">{product.price}</p>
+                                  <p className="ml-4">{product.price} €</p>
                                 </div>
-                                <p className="mt-1 text-sm text-gray-500">{product.color}</p>
+                                <p className="mt-1 text-sm text-gray-500">{product.location}</p>
                               </div>
                               <div className="flex flex-1 items-end justify-between text-sm">
-                                <p className="text-gray-500">Qté {product.quantity}</p>
+                                <p className="text-gray-500">{product.offer}</p>
 
                                 <div className="flex">
                                   <button type="button" className="font-medium text-cyan-700 hover:text-cyan-700">
@@ -119,12 +106,9 @@ export default function Cart({ isOpen, onClose }: CartProps) {
                 <div className="border-t border-gray-200 px-4 py-6 sm:px-6">
                   <div className="flex justify-between text-base font-medium text-gray-900">
                     <p>Sous-total</p>
-                    <p>$262.00</p>
-                  </div>
-                  <p className="mt-0.5 text-sm text-gray-500">Les frais de livraison et les taxes seront calculés à la caisse.</p>
-                  <div className="mt-6">
+                      <p>{totalPrice.toFixed(2)} €</p>
                     <a
-                      href="#"
+                      href="/cart"
                       className="flex items-center justify-center rounded-md border border-transparent bg-cyan-700 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-cyan-500"
                     >
                       Commander

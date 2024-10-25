@@ -44,41 +44,58 @@ import { cookies } from 'next/headers';
 //     return token;
 // }
 
+/**
+ * Handles user login by setting authentication cookies.
+ * 
+ * @param userId - The ID of the user logging in.
+ * @param accessToken - The access token received from the server.
+ * @param refreshToken - The refresh token received from the server.
+ */
+
 export async function handleLogin(userId: string, accessToken: string, refreshToken: string) {
     cookies().set('session_userid', userId, {
         httpOnly: true,
-        secure: false, // En production, tu devrais probablement le mettre sur `true`
-        maxAge: 60 * 60 * 24 * 7, // Une semaine
+        secure: process.env.NODE_ENV === 'production',
+        maxAge: 60 * 60 * 24 * 7, // One week
         path: '/'
     });
 
     cookies().set('session_access_token', accessToken, {
         httpOnly: true,
-        secure: false, // En production, tu devrais probablement le mettre sur `true`
+        secure: process.env.NODE_ENV === 'production',
         maxAge: 60 * 60, // 60 minutes
         path: '/'
     });
 
     cookies().set('session_refresh_token', refreshToken, {
         httpOnly: true,
-        secure: false, // En production, tu devrais probablement le mettre sur `true`
-        maxAge: 60 * 60 * 24 * 7, // Une semaine
+        secure: process.env.NODE_ENV === 'production',
+        maxAge: 60 * 60 * 24 * 7, // One week
         path: '/'
     });
 }
 
-// export async function resetAuthCookies() {
-//     cookies().set('session_userid', '');
-//     cookies().set('session_access_token', '');
-//     cookies().set('session_refresh_token', '');
-// }
+/**
+ * Resets authentication cookies by clearing their values.
+ */
 
-// Récupérer les données
+export async function resetAuthCookies() {
+    cookies().set('session_userid', '');
+    cookies().set('session_access_token', '');
+    cookies().set('session_refresh_token', '');
+}
 
-// export async function getUserId() {
-//     const userId = cookies().get('session_userid')?.value;
-//     return userId ? userId : null;
-// }
+
+/**
+ * Retrieves the user ID from cookies.
+ * 
+ * @returns The user ID if it exists, otherwise null.
+ */
+
+export async function getUserId() {
+    const userId = await cookies().get('session_userid')?.value;
+    return userId ? userId : null;
+}
 
 // export async function getAccessToken() {
 //     let accessToken = cookies().get('session_access_token')?.value;

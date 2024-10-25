@@ -1,14 +1,14 @@
-'use client'; // Utilisation du client-side rendering
+'use client';
 
-import React, { useEffect, useState, Suspense } from 'react';
+import React, { useEffect, useState, useCallback, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import dynamic from 'next/dynamic';
-import SportFilter, { SportType } from '../evenements/filters/SportFilter';
-import ErrorPage from 'next/error';
+import SportFilter, { SportType } from './filters/SportFilter'; 
 
-// Charger EventList sans SSR
+// Load EventList without SSR and with support for Suspense
 const DynamicEventList = dynamic(() => import('../evenements/EventList'), {
-  ssr: false, // Désactiver le rendu côté serveur
+  ssr: false,
+  suspense: true, // Enable suspense mode for EventList
 });
 
 const SelectedSportContent = () => {
@@ -16,46 +16,41 @@ const SelectedSportContent = () => {
   const searchParams = useSearchParams();
   const router = useRouter();
 
-  // Utiliser les paramètres de recherche de l'URL pour définir le sport sélectionné au chargement
+  // Update `selectedSport` based on search parameters
   useEffect(() => {
     const sportNameFromUrl = searchParams.get('sport');
-
     if (sportNameFromUrl) {
-      setSelectedSport({
-        id_sport: '',
-        name: sportNameFromUrl,
-        pictogram_url: '',
-      });
+      setSelectedSport({ id_sport: '', name: sportNameFromUrl, pictogram_url: '' });
+    } else {
+      setSelectedSport(null);
     }
   }, [searchParams]);
 
-  // Fonction appelée lorsque l'utilisateur sélectionne un sport via le filtre
-  const handleSportSelect = (sport: SportType | null) => {
+  // Handle sport selection with URL update
+  const handleSportSelect = useCallback((sport: SportType | null) => {
     setSelectedSport(sport);
-
-    // Mettre à jour l'URL avec le sport sélectionné
     if (sport) {
       router.push(`/evenements?sport=${encodeURIComponent(sport.name)}`);
     } else {
       router.push(`/evenements`);
     }
-  };
-
-  if (!selectedSport) {
-    return <ErrorPage statusCode={404} />;
-  }
+  }, [router]);
 
   return (
     <div>
-      {/* Affiche le filtre des sports */}
+      {/* Sport filter component */}
       <SportFilter onSportSelect={handleSportSelect} />
 
-      {/* Affiche la liste d'événements filtrée */}
-      <Suspense fallback={<div>Loading events...</div>}>
-        {selectedSport && (
-          <DynamicEventList selectedSport={selectedSport} />
-        )}
-      </Suspense>
+      {/* Event list */}
+      <div className="mt-8">
+        <Suspense fallback={<div className="loading-events">Loading events...</div>}>
+          {selectedSport ? (
+            <DynamicEventList selectedSport={selectedSport} />
+          ) : (
+            <div className="no-sport-selected">Sélectionner un sport pour afficher les événements</div>
+          )}
+        </Suspense>
+      </div>
     </div>
   );
 };
@@ -63,18 +58,14 @@ const SelectedSportContent = () => {
 const SelectedSport = () => {
   return (
     <main className="bg-white py-24 sm:py-32">
-      <div className="mx-auto max-w-7xl px-6 lg:px-8">
-        <div className="mx-auto max-w-2xl sm:text-center">
-          <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
-            Sélectionnez vos tickets
-          </h2>
-          <p className="mt-6 text-lg leading-8 text-gray-600">Rechercher par sport</p>
-          <div className="mt-5">
-            {/* Composant contenant la logique de sélection du sport */}
-            <Suspense fallback={<div>Loading sport filter...</div>}>
-              <SelectedSportContent />
-            </Suspense>
-          </div>
+      <div className="container mx-auto max-w-7xl px-6 lg:px-8">
+        <div className="text-center">
+          <h2 className="text-3xl font-bold text-gray-900 sm:text-4xl">Sélectionner un ticket</h2>
+        </div>
+        <div className="sport-filter-container mt-5">
+          <Suspense fallback={<div>Loading...</div>}>
+            <SelectedSportContent />
+          </Suspense>
         </div>
       </div>
     </main>
@@ -82,3 +73,4 @@ const SelectedSport = () => {
 };
 
 export default SelectedSport;
+

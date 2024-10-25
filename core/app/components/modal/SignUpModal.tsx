@@ -1,9 +1,17 @@
+/**
+ * SignUpModal component rendering a user registration form within a modal.
+ * - Utilizes `Modal` for structure.
+ * - Captures user details (name, email, password), submits registration request.
+ * - Displays errors if registration fails, directs to home on success.
+ */
+
 'use client'
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Modal from "./Modal";
 import useSignUpModal from "@/app/hooks/useSignUpModal";
 import apiService from "@/app/services/apiService";
+import { handleLogin } from "@/app/lib/actions";
 
 const SignUpModal = () => {
     
@@ -19,7 +27,6 @@ const SignUpModal = () => {
 
     // Submit function
     const submitSignup = async () => {
-        console.log('Erreur')
         const formData = {
             first_name: firstname,
             last_name: lastname,
@@ -30,8 +37,11 @@ const SignUpModal = () => {
         const response = await apiService.post('/api/auth/register/', JSON.stringify(formData))
 
         if (response.access) {
-            signUpModal.close
-            // router.push('/')
+            handleLogin(response.user.pk, response.access, response.refesh)
+
+            signUpModal.close();
+
+            router.push('/')
         } else {
             const tmpErrors: string[] = Object.values(response).map((error:any) => {
                 return error
@@ -42,7 +52,8 @@ const SignUpModal = () => {
 
     const content = (
         <>
-            <form 
+            <form
+                action={submitSignup} 
                 className="space-y-6 px-10 py-3">
                 
                 <div>
@@ -52,10 +63,10 @@ const SignUpModal = () => {
                     <div className="mt-2">
                         <input
                         id="firstname"
-                        // name="firstname"
+                        name="firstname"
                         type="text"
-                        // required
-                        // autoComplete="firstname"
+                        required
+                        autoComplete="firstname"
                         className="block w-full rounded-md border-0 py-1.5 px-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-cyan-700 sm:text-sm sm:leading-6"
                         onChange={(e) => setFirstname(e.target.value)}
                         />
@@ -69,10 +80,10 @@ const SignUpModal = () => {
                     <div className="mt-2">
                         <input
                         id="lastname"
-                        // name="lastname"
+                        name="lastname"
                         type="text"
-                        // required
-                        // autoComplete="lastname"
+                        required
+                        autoComplete="lastname"
                         className="block w-full rounded-md border-0 py-1.5 px-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-cyan-700 sm:text-sm sm:leading-6"
                         onChange={(e) => setLastname(e.target.value)}
                         />
@@ -86,10 +97,9 @@ const SignUpModal = () => {
                     <div className="mt-2">
                         <input
                         id="email"
-                        // name="email"
+                        name="email"
                         type="email"
-                        // required
-                        // autoComplete="email"
+                        autoComplete="email"
                         className="block w-full rounded-md border-0 py-1.5 px-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-cyan-700 sm:text-sm sm:leading-6"
                         onChange={(e) => setEmail(e.target.value)}
                         />
@@ -105,9 +115,8 @@ const SignUpModal = () => {
                     <div className="mt-2">
                         <input
                             id="password"
-                            // name="password"
+                            name="password"
                             type="password"
-                            // required
                             className="block w-full rounded-md border-0 py-1.5 px-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-cyan-700 sm:text-sm sm:leading-6"
                             onChange={(e) => setPassword1(e.target.value)}
                         />
@@ -123,9 +132,8 @@ const SignUpModal = () => {
                     <div className="mt-2">
                         <input
                             id="password2"
-                            // name="password2"
+                            name="password2"
                             type="password"
-                            // required
                             className="block w-full rounded-md border-0 py-1.5 px-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-cyan-700 sm:text-sm sm:leading-6"
                             onChange={(e) => setPassword2(e.target.value)}
                         />
@@ -144,8 +152,7 @@ const SignUpModal = () => {
 
                 <div>
                     <button
-                        type="submit"
-                        onClick={submitSignup}
+                        // onClick={submitSignup}
                         className="mt-2 flex w-full justify-center rounded-md bg-cyan-700 px-3 py-3 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-cyan-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-700"
                     >
                         CRÉER UN COMPTE

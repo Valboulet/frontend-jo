@@ -1,38 +1,45 @@
-'use client'; // Important pour utiliser le state et les hooks dans Next.js
+'use client';
 
-import React, { useState } from 'react';
-import { useRouter } from 'next/navigation'; // Importation de useRouter
-import Hero from './components/hero/Hero';
-import SportList from './components/sports-section/SportList';
-import LocationList from './components/locations-section/LocationList';
-import { SportType } from './evenements/filters/SportFilter'; // Importation du type SportType
+import React, { useState } from 'react'; 
+import { useRouter } from 'next/navigation';
+import Hero from './components/hero/Hero'; 
+import SportList from './components/sports-section/SportList'; 
+import LocationList from './components/locations-section/LocationList'; 
+import { SportType } from './evenements/filters/SportFilter'; 
 
 export default function Home() {
-  const [selectedSport, setSelectedSport] = useState<SportType | null>(null); // État pour le sport sélectionné
-  const router = useRouter(); // Hook pour manipuler l'URL
+  // State to hold the selected sport, initialized to null
+  const [selectedSport, setSelectedSport] = useState<SportType | null>(null);
+  
+  // Router hook for programmatic navigation
+  const router = useRouter();
 
-  // Fonction pour gérer la sélection du sport
+  // Function to handle the selection of a sport
   const handleSportSelect = (sport: SportType | null) => {
-    setSelectedSport(sport);
+    setSelectedSport(sport); // Update the selected sport state
+
     if (sport) {
-      // Mettre à jour l'URL avec le sport sélectionné
+      // If a sport is selected, update the URL with the selected sport's name
       router.push(`/evenements?sport=${encodeURIComponent(sport.name)}`);
     } else {
-      router.push('/evenements'); // Retour à la page événements sans sport
+      // If no sport is selected, navigate to the events page without sport filter
+      router.push('/evenements');
     }
   };
 
   return (
     <div>
       <header>
-        <Hero />
+        <Hero /> {/* Render the Hero component */}
       </header>
 
       <main>
         <div>
-          <SportList onSportSelect={handleSportSelect} /> {/* Passer la fonction de sélection */}
+          {/* Render the SportList component and pass the sport selection handler */}
+          <SportList onSportSelect={handleSportSelect} />
         </div>
         <div>
+          {/* Render the LocationList component */}
           <LocationList />
         </div>
       </main>

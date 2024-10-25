@@ -1,3 +1,12 @@
+/**
+ * SportFilter component providing a dropdown for sport selection.
+ * - Fetches available sports from an API on load.
+ * - Allows users to select a sport, which triggers the `onSportSelect` callback and navigates to events filtered by the selected sport.
+ *
+ * Props:
+ * - `onSportSelect`: Function to handle sport selection.
+ */
+
 'use client'
 
 import { Listbox, ListboxButton, ListboxOption, ListboxOptions } from '@headlessui/react';
@@ -13,36 +22,36 @@ export type SportType = {
 };
 
 interface SportFilterProps {
-  onSportSelect: (sport: SportType | null) => void; // Fonction pour gérer la sélection de sport
+  onSportSelect: (sport: SportType | null) => void; // Function to handle sport selection
 }
 
 const SportFilter: React.FC<SportFilterProps> = ({ onSportSelect }) => {
-  const [sports, setSports] = useState<SportType[]>([]); // État pour stocker la liste des sports
-  const [selected, setSelected] = useState<SportType | null>(null); // État pour le sport sélectionné
-  const router = useRouter(); // Utilisation du routeur Next.js
+  const [sports, setSports] = useState<SportType[]>([]); // State to store the list of sports
+  const [selected, setSelected] = useState<SportType | null>(null); // State to store the selected sport
+  const router = useRouter(); // Initialize Next.js router
 
   useEffect(() => {
     const fetchSports = async () => {
       try {
-        const response = await apiService.get('/api/sports/'); // Récupération des sports
-        setSports(response.data); // Mise à jour de l'état avec les sports récupérés
+        const response = await apiService.get('/api/sports/'); // Fetch sports data
+        setSports(response.data); // Update state with fetched sports
       } catch (error) {
-        console.error('Erreur lors de la récupération des sports', error); // Gestion des erreurs
+        console.error('Error fetching sports data', error); // Error handling
       }
     };
 
-    fetchSports(); // Appel de la fonction pour récupérer les sports
+    fetchSports(); // Call function to fetch sports
   }, []);
 
   const handleSelection = (sport: SportType | null) => {
-    setSelected(sport); // Mise à jour de l'état avec le sport sélectionné
-    onSportSelect(sport); // Appel de la fonction pour gérer la sélection
+    setSelected(sport); // Update state with selected sport
+    onSportSelect(sport); // Trigger callback with selected sport
 
     // Navigation
     if (sport) {
-      router.push(`/evenements?sport=${encodeURIComponent(sport.name)}`); // Navigation vers la page des événements avec le sport sélectionné
+      router.push(`/evenements?sport=${encodeURIComponent(sport.name)}`); // Navigate to events page with selected sport
     } else {
-      router.push(`/evenements`); // Navigation vers la page des événements sans sport sélectionné
+      router.push(`/evenements`); // Navigate to events page without a specific sport
     }
   };
 
@@ -52,9 +61,9 @@ const SportFilter: React.FC<SportFilterProps> = ({ onSportSelect }) => {
         <ListboxButton className="relative w-full cursor-default rounded-md bg-white py-1.5 pl-3 pr-10 text-left text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 sm:text-sm sm:leading-6">
           <span className="flex items-center">
             {selected ? (
-              <span className="ml-3 block truncate">{selected.name}</span> // Affiche le nom du sport sélectionné
+              <span className="ml-3 block truncate">{selected.name}</span> // Display selected sport name
             ) : (
-              <span className="ml-3 block truncate">Choisissez un sport</span> // Texte par défaut si aucun sport n'est sélectionné
+              <span className="ml-3 block truncate">Choisissez un sport</span> // Default text if no sport selected
             )}
           </span>
           <span className="pointer-events-none absolute inset-y-0 right-0 ml-3 flex items-center pr-2">
@@ -71,13 +80,13 @@ const SportFilter: React.FC<SportFilterProps> = ({ onSportSelect }) => {
             >
               <div className="flex items-center">
                 <span className="ml-3 block truncate font-normal group-data-[selected]:font-semibold">
-                  {sport.name} {/* Affiche le nom du sport */}
+                  {sport.name} {/* Display sport name */}
                 </span>
               </div>
 
               {selected?.id_sport === sport.id_sport && (
                 <span className="absolute inset-y-0 right-0 flex items-center pr-4 text-indigo-600 group-data-[focus]:text-white">
-                  <CheckIcon aria-hidden="true" className="h-5 w-5" /> {/* Icône de sélection si le sport est choisi */}
+                  <CheckIcon aria-hidden="true" className="h-5 w-5" /> {/* Check icon if sport is selected */}
                 </span>
               )}
             </ListboxOption>

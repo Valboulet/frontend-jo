@@ -1,3 +1,11 @@
+/**
+ * Navbar component with responsive design.
+ * - Provides mobile and desktop navigation links.
+ * - Includes a cart and user authentication actions (login/logout).
+ * - Contains a mobile menu toggle and cart visibility toggle.
+ * - Uses Headless UI Dialog for the mobile menu and React state management for cart display.
+ */
+
 'use client'
 
 import { useState } from 'react'
@@ -11,8 +19,10 @@ import Logo from './Logo'
 import DesktopNav from './DesktopNav'
 import Cart from '@/app/cart/Cart'
 import useLoginModal from '@/app/hooks/useLoginModal'
+import MobileLogOutButton from './MobileLogoutButton'
 
-export default function Navbar() {
+const Navbar = () => {
+
   const [open, setOpen] = useState(false)
   const [isCartOpen, setIsCartOpen] = useState(false)
   const loginModal = useLoginModal()
@@ -70,15 +80,17 @@ export default function Navbar() {
                 </a>
               </div>
               <div className="flow-root">
-                <a href="" 
-                  className="-m-2 block p-2 font-medium text-gray-900"
-                  onClick={(e)=> {
-                    e.preventDefault()
+                <div 
+                  className="-m-2 block p-2 font-medium text-gray-900 cursor-pointer"
+                  onClick={()=> {
                     loginModal.open()
                   }}>
                   Se connecter
-                </a>
+                </div>
               </div>
+
+              <MobileLogOutButton />
+
               <div className="flow-root">
                 <a href="/account" className="-m-2 block p-2 font-medium text-gray-900">
                   Votre compte
@@ -129,7 +141,9 @@ export default function Navbar() {
               <Logo />
 
               {/* Desktop nav links */}
-              <DesktopNav />
+              <DesktopNav 
+              />
+
             </div>
           </div>
         </nav>
@@ -140,3 +154,9 @@ export default function Navbar() {
     </div>
   )
 }
+
+export default Navbar;
+
+
+
+

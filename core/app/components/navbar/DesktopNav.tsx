@@ -1,13 +1,23 @@
+/**
+ * DesktopNav component rendering navigation links, account access, login modal,
+ * and cart functionality in desktop view.
+ * - Displays links to sports and location sections.
+ * - Triggers login modal and displays a logout button.
+ * - Opens cart overlay on button click.
+ */
+
 'use client'
 
 import Cart from "@/app/cart/Cart"
 import { useState } from 'react'
 import useLoginModal from '@/app/hooks/useLoginModal'
+import LogOutButton from "./LogoutButton"
 
 
-export default function DesktopNav() {
-  const [isCartOpen, setIsCartOpen] = useState(false) // État pour l'ouverture du panier
-  const loginModal = useLoginModal()
+const DesktopNav = () => {
+
+  const [isCartOpen, setIsCartOpen] = useState(false); // État pour l'ouverture du panier
+  const loginModal = useLoginModal();
 
     return (
       <>
@@ -32,14 +42,19 @@ export default function DesktopNav() {
 
         <div className="ml-auto flex items-center">
           <div className="hidden lg:flex lg:flex-1 lg:items-center lg:justify-end lg:space-x-6">
-            <a href="" 
-              className="text-sm font-medium text-gray-700 hover:text-gray-800"
-              onClick={(e)=> {
-                e.preventDefault()
-                loginModal.open()
-              }}>
-              Se connecter
-            </a>
+        
+              <div
+                className="text-sm font-medium text-gray-700 hover:text-gray-800 cursor-pointer"
+                onClick={()=> {
+                  loginModal.open()
+                }}
+              >
+                Se connecter
+              </div>
+              <span aria-hidden="true" className="h-6 w-px bg-gray-200" />
+
+              <LogOutButton />
+
             <span aria-hidden="true" className="h-6 w-px bg-gray-200" />
             <a href="/account" className="text-sm font-medium text-gray-700 hover:text-gray-800">
               Votre compte
@@ -71,3 +86,5 @@ export default function DesktopNav() {
       </>
     )
 }
+
+export default DesktopNav;

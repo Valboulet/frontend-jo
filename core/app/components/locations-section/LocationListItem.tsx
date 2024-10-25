@@ -1,13 +1,16 @@
-import { LocationType } from './LocationList';
+/**
+ * LocationListItem component renders an individual location item.
+ * 
+ * Receives a `location` prop of type `LocationType` and displays its image and name.
+ */
 
+import { LocationType } from './LocationList';
 
 interface LocationProps {
     location: LocationType
 }
 
-const LocationListItem: React.FC<LocationProps> = ({
-  location
-}) => {
+const LocationListItem: React.FC<LocationProps> = ({ location }) => {
   return (
     <div>
       <a key={location.id_location} href={''} className="group">
@@ -20,7 +23,7 @@ const LocationListItem: React.FC<LocationProps> = ({
         <h3 className="mt-3 text-lg font-medium text-gray-900 text-center">{location.name}</h3>
       </a>
     </div>
-  )
-}
+  );
+};
 
-export default LocationListItem
+export default LocationListItem;

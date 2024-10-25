@@ -1,3 +1,16 @@
+/**
+ * SportList component that fetches and displays a list of sports.
+ * - Fetches sports data from the API on mount using `apiService`.
+ * - Renders a grid of `SportListItem` components for each sport.
+ * - Passes selected sport to `onSportSelect` callback.
+ * 
+ * Props:
+ * - `onSportSelect`: Callback to handle when a sport is selected.
+ * 
+ * Types:
+ * - `SportType`: Defines the structure of each sport item.
+ */
+
 'use client'
 
 import React, { useEffect, useState } from 'react'

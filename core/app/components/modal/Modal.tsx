@@ -1,3 +1,13 @@
+/**
+ * Modal component that displays a centered modal overlay with specified content.
+ * 
+ * Props:
+ * - `label`: Title of the modal.
+ * - `close`: Callback function to close the modal.
+ * - `content`: React element displayed within the modal body.
+ * - `isOpen`: Controls modal visibility.
+ */
+
 'use client'
 
 import { useCallback, useEffect, useState } from "react";

@@ -1,21 +1,30 @@
+/**
+ * SportListItem component that displays a single sport item and handles selection.
+ * - Clicking on a sport item redirects to the events page, passing the sport's name as a query parameter.
+ * - Invokes the `onSportSelect` callback with the selected sport.
+ * 
+ * Props:
+ * - `sport`: A `SportType` object representing the sport data to display.
+ * - `onSportSelect`: Callback to handle the selected sport.
+ */
+
 'use client'
 
-import { useRouter } from 'next/navigation'; // Import du router de Next.js
+import { useRouter } from 'next/navigation'; // Import Next.js router
 import { SportType } from './SportList';
-
 
 interface SportProps {
     sport: SportType;
-    onSportSelect: (sport: SportType | null) => void; // Ajoutez cette ligne
+    onSportSelect: (sport: SportType | null) => void; // Adds sport selection callback
 }
 
 const SportListItem: React.FC<SportProps> = ({ sport, onSportSelect }) => {
-  const router = useRouter(); // Initialiser le router
+  const router = useRouter(); // Initialize the router
 
-  // Fonction de redirection vers la page des événements
+  // Redirect function to navigate to the events page
   const handleClick = () => {
-    // Redirection vers la page des événements avec le nom du sport dans l'URL
-    onSportSelect(sport); // Appel de onSportSelect ici pour passer le sport sélectionné
+    // Redirects to the events page with the sport name in the URL
+    onSportSelect(sport); // Calls onSportSelect to pass the selected sport
     router.push(`/evenements?sport=${encodeURIComponent(sport.name)}`);
   };
 
@@ -36,5 +45,6 @@ const SportListItem: React.FC<SportProps> = ({ sport, onSportSelect }) => {
 };
 
 export default SportListItem;
+
 
 
